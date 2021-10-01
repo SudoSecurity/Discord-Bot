@@ -28,10 +28,11 @@ client.on("messageCreate", async (message) => {
             const code = `async () => { ${codeArr.join("\n")} }`
 
             let out = await eval(code)()
+            
+            message.channel.send(`Typeof output: **${typeof out}**`)
             if (typeof out !== "string") out = require("util").inspect(out)
             out = out.replace(process.env.TOKEN, "[TOKEN REDACTED]").replace(process.env.MONGODB, "[DB URI REDACTED]")
 
-            message.channel.send(`Typeof output: **${typeof out}**`)
             message.channel.send({
                 content: out ? out : "null",
                 split: true,
